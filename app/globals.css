@@ -1,26 +1,137 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Ilkal Threads design tokens — extracted from the Figma file via
+ * get_design_context (no Figma Variables exist in the source file, so these
+ * are reconciled by hand into one source of truth every component reads from).
+ */
+@theme {
+  /* Brand */
+  --color-primary-50: #fbf1f2;
+  --color-primary-100: #f5dde0;
+  --color-primary-200: #e8b9bf;
+  --color-primary-300: #d68e98;
+  --color-primary-400: #b85d6c;
+  --color-primary-500: #8f3244;
+  --color-primary-600: #6b1d2a;
+  --color-primary-700: #5a1823;
+  --color-primary-800: #47131c;
+  --color-primary-900: #360e15;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-gold-50: #faf6ed;
+  --color-gold-100: #f2e8cf;
+  --color-gold-200: #e4cd9c;
+  --color-gold-300: #d3b475;
+  --color-gold-400: #c4a265;
+  --color-gold-500: #ad8a4f;
+  --color-gold-600: #8c6d3d;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Neutrals / cream surfaces */
+  --color-cream-50: #fefdfb;
+  --color-cream-100: #faf7f2;
+  --color-cream-200: #faf3e6;
+  --color-cream-300: #eadccf;
+  --color-cream-400: #d9c7c5;
+
+  --color-ink-900: #1e1b18;
+  --color-ink-700: #5c5450;
+  --color-ink-500: #968e89;
+  --color-ink-300: #c7c0ba;
+
+  /* Semantic status */
+  --color-success-50: #edf7ee;
+  --color-success-500: #2e7d3b;
+  --color-warning-50: #fdf5e7;
+  --color-warning-500: #b57c14;
+  --color-danger-50: #fbeceb;
+  --color-danger-500: #b3261e;
+  --color-info-50: #eaf1fb;
+  --color-info-500: #1d5fb3;
+
+  /* Admin "secure terminal" dark shell */
+  --color-secure-950: #0b0f14;
+  --color-secure-900: #10161d;
+  --color-secure-800: #171f28;
+  --color-secure-700: #232d39;
+  --color-secure-500: #4b5b6d;
+  --color-secure-accent: #3ddc84;
+
+  /* Typography */
+  --font-display: var(--font-eb-garamond), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii (from Figma: inputs/buttons 4px, cards 16px, pills/avatars 20px) */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0px 8px 24px 0px rgba(0, 0, 0, 0.05);
+  --shadow-popover: 0px 12px 32px 0px rgba(30, 27, 24, 0.12);
+
+  /* Motion */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.15s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  --background: var(--color-cream-200);
+  --foreground: var(--color-ink-900);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
