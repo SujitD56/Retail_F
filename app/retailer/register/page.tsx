@@ -169,7 +169,7 @@ export default function RetailerRegisterPage() {
               </Select>
               {step2.formState.errors.primaryCategory && <p className="mt-1.5 text-xs text-danger-500">{step2.formState.errors.primaryCategory.message}</p>}
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
                 <Label htmlFor="city" required>City</Label>
                 <Input id="city" error={step2.formState.errors.city?.message} {...step2.register("city")} />

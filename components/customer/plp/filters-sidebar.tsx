@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { StarRating } from "@/components/ui/star-rating";
 import type { Retailer, WeaveType } from "@/types";
@@ -35,6 +35,8 @@ export function FiltersSidebar({
   retailers,
   categoryCounts,
   hideCategory = false,
+  mobileOpen = false,
+  onMobileClose,
 }: {
   filters: PlpFilters;
   onChange: (next: PlpFilters) => void;
@@ -42,23 +44,33 @@ export function FiltersSidebar({
   categoryCounts: Record<string, number>;
   /** Collection-scoped listings hide the category group — the collection itself is the category. */
   hideCategory?: boolean;
+  /** Below lg, the sidebar renders as an off-canvas drawer controlled by the parent's "Filters" button. */
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }) {
   const toggle = <T,>(list: T[], value: T): T[] =>
     list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 
-  return (
-    <aside className="flex w-[280px] shrink-0 flex-col gap-6">
+  const body = (
+    <>
       <div className="flex items-center justify-between">
         <p className="text-lg font-semibold text-ink-900">Filters</p>
-        <button
-          type="button"
-          onClick={() =>
-            onChange({ categories: [], priceMax: 10000, colors: [], materials: [], retailerIds: [], minRating: 0, inStockOnly: false })
-          }
-          className="text-[13px] font-medium text-primary-600"
-        >
-          Clear All
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() =>
+              onChange({ categories: [], priceMax: 10000, colors: [], materials: [], retailerIds: [], minRating: 0, inStockOnly: false })
+            }
+            className="text-[13px] font-medium text-primary-600"
+          >
+            Clear All
+          </button>
+          {onMobileClose && (
+            <button type="button" aria-label="Close filters" onClick={onMobileClose} className="text-ink-700 lg:hidden">
+              <X className="size-5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {!hideCategory && (
@@ -165,7 +177,24 @@ export function FiltersSidebar({
           </label>
         </div>
       </FilterGroup>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop — always visible at lg+, matches the previous fixed layout. */}
+      <aside className="hidden w-[280px] shrink-0 flex-col gap-6 lg:flex">{body}</aside>
+
+      {/* Mobile — off-canvas drawer, toggled by the listing page's "Filters" button. */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="absolute inset-0 bg-ink-900/40" onClick={onMobileClose} />
+          <aside className="relative flex h-full w-[280px] max-w-[85vw] flex-col gap-6 overflow-y-auto bg-white p-5 shadow-xl">
+            {body}
+          </aside>
+        </div>
+      )}
+    </>
   );
 }
 

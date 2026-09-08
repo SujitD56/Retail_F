@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { LayoutGrid, List } from "lucide-react";
+import { LayoutGrid, List, SlidersHorizontal } from "lucide-react";
 import type { Product, Retailer, WeaveType } from "@/types";
 import { FiltersSidebar } from "./filters-sidebar";
 import { DEFAULT_PLP_FILTERS, SORT_LABELS, type PlpFilters, type SortOption } from "./types";
@@ -36,6 +36,7 @@ export function SareeListingClient({
   const [sort, setSort] = useState<SortOption>("best-selling");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [page, setPage] = useState(1);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const retailerName = (id: string) => retailers.find((r) => r.id === id)?.name;
 
@@ -90,21 +91,30 @@ export function SareeListingClient({
         retailers={retailers}
         categoryCounts={categoryCounts}
         hideCategory={hideCategoryFilter}
+        mobileOpen={mobileFiltersOpen}
+        onMobileClose={() => setMobileFiltersOpen(false)}
       />
 
       <div className="min-w-0 flex-1">
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
           {header ?? (
             <div className="flex items-baseline gap-4">
-              <h1 className="font-display text-4xl text-primary-600">Ilkal Sarees</h1>
-              <p className="text-base text-ink-700">{filtered.length.toLocaleString("en-IN")} Masterpieces Found</p>
+              <h1 className="font-display text-3xl text-primary-600 sm:text-4xl">Ilkal Sarees</h1>
+              <p className="text-sm text-ink-700 sm:text-base">{filtered.length.toLocaleString("en-IN")} Masterpieces Found</p>
             </div>
           )}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <button
+              type="button"
+              onClick={() => setMobileFiltersOpen(true)}
+              className="flex items-center gap-2 rounded-sm border border-cream-300 bg-white px-3 py-2 text-sm font-medium text-ink-900 lg:hidden"
+            >
+              <SlidersHorizontal className="size-4" /> Filters
+            </button>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-ink-700">Sort By:</span>
+              <span className="hidden text-sm text-ink-700 sm:inline">Sort By:</span>
               <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[140px] sm:w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

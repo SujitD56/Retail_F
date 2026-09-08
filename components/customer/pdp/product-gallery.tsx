@@ -15,7 +15,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         <Image src={current.url} alt={current.alt} fill sizes="(min-width: 1024px) 40vw, 90vw" priority className="object-cover" />
       </div>
       {images.length > 1 && (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4">
           {images.map((img, i) => (
             <button
               key={img.url + i}

@@ -23,11 +23,11 @@ export function Heritage() {
           Discover Ilkal
         </Button>
       </div>
-      <div className="flex h-[480px] flex-1 gap-6">
+      <div className="flex h-[280px] flex-1 gap-4 sm:h-[360px] sm:gap-6 lg:h-[480px]">
         <div className="relative flex-1 overflow-hidden rounded-md">
           <Image src="/images/customer/heritage-1.png" alt="Ilkal weaving loom" fill sizes="25vw" className="object-cover" />
         </div>
-        <div className="flex w-[220px] flex-col gap-6">
+        <div className="flex w-[110px] flex-col gap-4 sm:w-[160px] sm:gap-6 lg:w-[220px]">
           <div className="relative flex-1 overflow-hidden rounded-md">
             <Image src="/images/customer/heritage-2.png" alt="Handloom detail" fill sizes="15vw" className="object-cover" />
           </div>
